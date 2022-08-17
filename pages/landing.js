@@ -43,10 +43,20 @@ function Landing() {
   }
 
   useEffect(() => {
-    if (!person) {
+    if (person) {
+      const onPageLoad = () => {
+        getWatchlist()
+      }
+      if (document.readyState === 'complete') {
+        onPageLoad()
+      } else {
+        window.addEventListener('load', onPageLoad)
+        // Remove the event listener when component unmounts
+        return () => window.removeEventListener('load', onPageLoad)
+      }
+    } else {
       router.push('/')
     }
-    getWatchlist()
   }, [])
 
   useEffect(() => {
@@ -57,6 +67,12 @@ function Landing() {
     const { data, error } = await supabase
       .from('watchlists')
       .insert({ movie_id: movie.id, user_id: person.id })
+    getWatchlist()
+  }
+
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+    router.push('/sign-in')
   }
 
   async function deleteFromWatchlist(movie) {
@@ -73,6 +89,14 @@ function Landing() {
 
   return (
     <div className="bg-main-blue w-screen h-screen">
+      <div className="text-right mr-8 pt-8">
+        <button
+          onClick={signOut}
+          className="border px-4 py-2 bg-red-500 text-white"
+        >
+          Sign out
+        </button>
+      </div>
       <nav className="flex justify-between items-center">
         <MovieHeading text="Find Movies" />
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />

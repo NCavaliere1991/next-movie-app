@@ -1,5 +1,7 @@
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
+import { supabase } from '../utils/supabaseClient'
+import { useRouter } from 'next/router'
 
 export default function SignInPage() {
   const {
@@ -8,7 +10,15 @@ export default function SignInPage() {
     watch,
     formState: { errors }
   } = useForm()
-  const onSubmit = (data) => console.log(data)
+  const router = useRouter()
+
+  const onSubmit = async (data) => {
+    const { user, session, error } = await supabase.auth.signIn({
+      email: data.email,
+      password: data.password
+    })
+    router.push('/landing')
+  }
 
   return (
     <div className="bg-main-blue h-screen flex justify-center items-center">
