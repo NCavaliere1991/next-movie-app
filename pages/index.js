@@ -8,6 +8,7 @@ export default function Home() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors }
   } = useForm()
   const onSubmit = async (data) => {
