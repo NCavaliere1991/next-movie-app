@@ -13,7 +13,7 @@ export default function Home() {
     const { user, session, error } = await supabase.auth.signUp(
       { email: data.email, password: data.password },
       {
-        redirectTo: `https://next-movie-app-green.vercel.app/landing`
+        redirectTo: `${window.location.origin}/landing`
       }
     )
   }
