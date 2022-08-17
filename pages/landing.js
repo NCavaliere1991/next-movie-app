@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react'
+import React, { useState, useEffect } from 'react'
 import MovieHeading from '../components/MovieHeading'
 import MovieList from '../components/MovieList'
 import PopularMovieList from '../components/PopularMovieList'
@@ -11,7 +11,6 @@ function Landing() {
   const [searchTerm, setSearchTerm] = useState('')
   const [watchlist, setWatchlist] = useState([])
   const router = useRouter()
-  const person = supabase.auth.user()
 
   function searchMovie(searchTerm) {
     const url = `https://api.themoviedb.org/3/search/movie?api_key=645b84c0424790ef23fda061c7c0aa17&query=${searchTerm}`
@@ -56,7 +55,7 @@ function Landing() {
       // Remove the event listener when component unmounts
       return () => window.removeEventListener('load', onPageLoad)
     }
-  }, [watchlist])
+  }, [])
 
   useEffect(() => {
     searchMovie(searchTerm)
