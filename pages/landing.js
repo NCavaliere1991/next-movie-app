@@ -54,8 +54,6 @@ function Landing() {
         // Remove the event listener when component unmounts
         return () => window.removeEventListener('load', onPageLoad)
       }
-    } else {
-      router.push('/')
     }
   }, [])
 
