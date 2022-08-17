@@ -33,7 +33,9 @@ function MovieList(props) {
             </div>
             <div className="flex items-center justify-between mb-0 text-yellow-500 p-4">
               <h3>{movie.title}</h3>
-              <span className={getRating(movie.vote_average)}>
+              <span
+                className={`${getRating(movie.vote_average)} bg-main-blue p-2`}
+              >
                 {movie.vote_average}
               </span>
             </div>

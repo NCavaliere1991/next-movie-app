@@ -27,7 +27,7 @@ function PopularMovieList(props) {
     showPopularMovies(url)
   }
 
-  function showPopularMovies(path) {
+  async function showPopularMovies(path) {
     fetch(path)
       .then((response) => response.json())
       .then((response) => {
@@ -58,7 +58,7 @@ function PopularMovieList(props) {
               </button>
             </div>
             <div className="flex items-center justify-between mb-0 text-yellow-500 p-4">
-              <h3 className="text-xl">{movie.title}</h3>
+              <h3>{movie.title}</h3>
               <span
                 className={`${getRating(movie.vote_average)} bg-main-blue p-2`}
               >

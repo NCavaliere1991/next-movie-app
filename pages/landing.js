@@ -4,12 +4,14 @@ import MovieList from '../components/MovieList'
 import PopularMovieList from '../components/PopularMovieList'
 import SearchBar from '../components/SearchBar'
 import { supabase } from '../utils/supabaseClient'
+import { useRouter } from 'next/router'
 
 function Landing() {
   const [movies, setMovies] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [watchlist, setWatchlist] = useState([])
   const person = supabase.auth.user()
+  const router = useRouter()
 
   function searchMovie(searchTerm) {
     const url = `https://api.themoviedb.org/3/search/movie?api_key=645b84c0424790ef23fda061c7c0aa17&query=${searchTerm}`
@@ -23,13 +25,27 @@ function Landing() {
   }
 
   async function getWatchlist() {
+    let movies = []
     const { data, error } = await supabase
-      .from('users_watchlists')
-      .select('watchlist')
-    console.log(data)
+      .from('watchlists')
+      .select('movie_id')
+      .match({ user_id: person.id })
+
+    if (data) {
+      for (const movie of data) {
+        const url = `https://api.themoviedb.org/3/movie/${movie.movie_id}?api_key=645b84c0424790ef23fda061c7c0aa17`
+        await fetch(url)
+          .then((res) => res.json())
+          .then((result) => movies.push(result))
+      }
+      setWatchlist(movies)
+    }
   }
 
   useEffect(() => {
+    if (!person) {
+      router.push('/')
+    }
     getWatchlist()
   }, [])
 
@@ -38,17 +54,9 @@ function Landing() {
   }, [searchTerm])
 
   async function addToWatchlist(movie) {
-    setWatchlist((prevMovies) => {
-      if (!prevMovies.includes(movie)) {
-        return [...prevMovies, movie]
-      }
-    })
-    // if (watchlist !== null) {
-    //   const { data, error } = await supabase
-    //     .from('users_watchlists')
-    //     .update({ watchlist: watchlist })
-    //     .match({ user_id: person?.id })
-    // }
+    const { data, error } = await supabase
+      .from('watchlists')
+      .insert({ movie_id: movie.id, user_id: person.id })
   }
 
   async function deleteFromWatchlist(movie) {
@@ -57,23 +65,11 @@ function Landing() {
         return film.id !== movie.id
       })
     })
-    // const { data, error } = await supabase
-    //   .from('users_watchlists')
-    //   .update({ watchlist: watchlist })
-    //   .match({ user_id: person?.id })
+    const { data, error } = await supabase
+      .from('watchlists')
+      .delete()
+      .match({ movie_id: movie.id })
   }
-
-  async function checkForUser() {
-    if (person) {
-      const { data, error } = await supabase
-        .from('users_watchlists')
-        .insert([{ user_id: person?.id }])
-    }
-  }
-
-  useEffect(() => {
-    checkForUser()
-  }, [])
 
   return (
     <div className="bg-main-blue w-screen h-screen">
