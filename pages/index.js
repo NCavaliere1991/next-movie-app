@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { supabase } from '../utils/supabaseClient'
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function Home() {
   const {
@@ -16,6 +17,12 @@ export default function Home() {
         redirectTo: `${window.location.origin}/landing`
       }
     )
+    if (error) {
+      toast.error('There was an error, please try again!')
+    } else {
+      reset()
+      toast.success('Please check your email to verify!')
+    }
   }
 
   return (
@@ -50,6 +57,7 @@ export default function Home() {
           <button className="px-4 py-2 border rounded-md bg-black text-white w-1/3 mx-auto mt-5">
             Sign up
           </button>
+          <Toaster />
         </div>
       </form>
     </div>
