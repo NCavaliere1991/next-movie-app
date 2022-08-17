@@ -1,22 +1,14 @@
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
-import { supabase } from '../utils/supabaseClient'
 
-export default function Home() {
+export default function SignInPage() {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors }
   } = useForm()
-  const onSubmit = async (data) => {
-    const { user, session, error } = await supabase.auth.signUp(
-      { email: data.email, password: data.password },
-      {
-        redirectTo: `${window.location.origin}/landing`
-      }
-    )
-  }
+  const onSubmit = (data) => console.log(data)
 
   return (
     <div className="bg-main-blue h-screen flex justify-center items-center">
@@ -25,13 +17,13 @@ export default function Home() {
         className="bg-white p-4 md:w-1/4 rounded-md"
       >
         <p className="text-right">
-          Already have an account?{' '}
-          <Link href="/sign-in" passHref>
-            <a className="underline">Log in</a>
+          Dont have an account?{' '}
+          <Link href="/" passHref>
+            <a className="underline">Sign up</a>
           </Link>
         </p>
         <div className="flex flex-col justify-center mt-5">
-          <p className="text-3xl text-center">Register for an account</p>
+          <p className="text-3xl text-center">Sign in</p>
           <label className="w-full mt-3">
             Email:
             <input
@@ -48,7 +40,7 @@ export default function Home() {
             />
           </label>
           <button className="px-4 py-2 border rounded-md bg-black text-white w-1/3 mx-auto mt-5">
-            Sign up
+            Sign in
           </button>
         </div>
       </form>

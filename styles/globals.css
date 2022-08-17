@@ -1,26 +1,138 @@
-html,
-body {
-  padding: 0;
+/* body {
+  background-color: #002db3;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Roboto', sans;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+nav {
+  background-color: #002db3;
+  display: flex;
+  justify-content: space-between;
 }
 
-* {
-  box-sizing: border-box;
+nav h2 {
+  color: white;
+  margin-left: 15px;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+.search {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 2px solid  #1a53ff;
+  margin: 15px 30px;
 }
+
+.search::placeholder {
+  color: white;
+}
+
+.search:focus {
+  background-color: #1a53ff;
+  outline: 0;
+  color: white;
+}
+
+section {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.movie-container {
+  width: 300px;
+  margin: 1rem;
+  background-color: #1a53ff;
+  border: 2px solid black;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.movie-container img {
+  width: 300px;
+}
+
+.movie-container span {
+  background-color: #002db3;
+  padding: 0.5rem;
+}
+
+.movie-container:hover .description {
+  display: flex;
+  position: absolute;
+  color: white;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: auto;
+  transition: 0.5s ease;
+}
+
+.movie-container:hover {
+  transform: scale(1.1);
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  margin-bottom: 0;
+  color: gold;
+}
+
+.description {
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.addButton {
+  background-color: gold;
+  border: 2px solid violet;
+  border-radius: 10px;
+  padding: 0.5rem;
+  color: #002db3;
+  cursor: pointer;
+
+}
+
+.addButton:hover {
+  background-color: #e6c300;
+}
+
+.loadMore {
+  background-color: gold;
+  border: 2px solid violet;
+  border-radius: 10px;
+  padding: 0.5rem;
+  color: #002db3;
+  cursor: pointer;
+
+}
+
+.loadMore:hover {
+  background-color: #e6c300;
+}
+
+.green {
+  color: lime;
+}
+
+.yellow {
+  color: yellow;
+}
+
+.red {
+  color: red;
+} */
+
+@tailwind base; 
+@tailwind components; 
+@tailwind utilities;
