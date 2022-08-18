@@ -88,10 +88,6 @@ function Landing() {
       .match({ movie_id: movie.id })
   }
 
-  useEffect(() => {
-    getWatchlist()
-  })
-
   return (
     <div className="bg-main-blue w-screen h-screen">
       <div className="text-right mr-8 pt-8">
