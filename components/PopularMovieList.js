@@ -35,6 +35,7 @@ function PopularMovieList(props) {
         setCurrentPage(response.page)
       })
   }
+  console.log(props.watchlist)
   return (
     <>
       <div className="flex items-center">
@@ -52,9 +53,16 @@ function PopularMovieList(props) {
               <h4 className="overview">{movie.overview}</h4>
               <button
                 onClick={() => props.onAdd(movie)}
-                className="bg-yellow-500 border-violet-400 rounded-sm text-main-blue p-2"
+                disabled={props.watchlist.includes(movie.id)}
+                className={`${
+                  props.watchlist.includes(movie.id)
+                    ? 'bg-main-blue text-yellow-500'
+                    : 'bg-yellow-500 text-main-blue'
+                } border-violet-400 font-bold rounded-sm p-2`}
               >
-                {props.buttonText}
+                {props.watchlist.includes(movie.id)
+                  ? 'Already in watchlist'
+                  : 'Add to watchlist'}
               </button>
             </div>
             <div className="flex items-center justify-between mb-0 text-yellow-500 p-4">

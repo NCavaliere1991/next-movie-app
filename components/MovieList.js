@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 
 function MovieList(props) {
   const imgURL = 'https://image.tmdb.org/t/p/w500'
@@ -26,7 +27,7 @@ function MovieList(props) {
               <h4 className="overview">{movie.overview}</h4>
               <button
                 onClick={() => props.onAdd(movie)}
-                className="addButton bg-yellow-500 border-violet-400 rounded-sm text-main-blue p-2"
+                className="addButton bg-yellow-500 border-violet-400 rounded-sm text-main-blue p-2 font-bold"
               >
                 {props.buttonText}
               </button>

@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 function Landing() {
   const [movies, setMovies] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [movieIds, setMovieIds] = useState([])
   const [watchlist, setWatchlist] = useState([])
   const router = useRouter()
 
@@ -25,6 +26,7 @@ function Landing() {
 
   async function getWatchlist() {
     let movies = []
+    let ids = []
     const user = await supabase.auth.user()
     if (user) {
       const { data, error } = await supabase
@@ -37,9 +39,13 @@ function Landing() {
           const url = `https://api.themoviedb.org/3/movie/${movie.movie_id}?api_key=645b84c0424790ef23fda061c7c0aa17`
           await fetch(url)
             .then((res) => res.json())
-            .then((result) => movies.push(result))
+            .then((result) => {
+              movies.push(result)
+              ids.push(result.id)
+            })
         }
         setWatchlist(movies)
+        setMovieIds(ids)
       }
     }
   }
@@ -107,7 +113,8 @@ function Landing() {
           movies={movies}
           key={movies.id}
           onAdd={addToWatchlist}
-          buttonText="Add To WatchList"
+          watchlist={movieIds}
+          buttonText="Add to watchlist"
         />
       </section>
       <nav>
@@ -118,6 +125,7 @@ function Landing() {
           onAdd={addToWatchlist}
           buttonText="Add To Watchlist"
           seeMoreText="Load More"
+          watchlist={movieIds}
         />
       </section>
       <nav className="bg-main-blue">
